@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Customer {
-  String name;
-  String phone;
-  double due;
-  Customer({required this.name, required this.phone, required this.due});
-}
+import '../model/customer_due_model.dart';
+
 
 class CustomerDueController extends GetxController {
   RxList<Customer> customers = <Customer>[
