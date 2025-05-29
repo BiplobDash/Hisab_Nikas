@@ -6,34 +6,7 @@ class StockScreen extends StatelessWidget {
   StockScreen({super.key});
 
   final controller = Get.put(StockController());
-  final nameController = TextEditingController();
-  final quantityController = TextEditingController();
-  final priceController = TextEditingController();
 
-
-  void _showAddProductDialog() {
-    Get.defaultDialog(
-      title: 'নতুন পণ্য যোগ করুন',
-      content: Column(
-        children: [
-          TextField(controller: nameController, decoration: InputDecoration(hintText: 'পণ্যের নাম')),
-          TextField(controller: quantityController, keyboardType: TextInputType.number, decoration: InputDecoration(hintText: 'পরিমাণ')),
-          TextField(controller: priceController, keyboardType: TextInputType.number, decoration: InputDecoration(hintText: 'দাম')),
-        ],
-      ),
-      textConfirm: "যোগ করুন",
-      onConfirm: () {
-        final name = nameController.text;
-        final quantity = int.tryParse(quantityController.text) ?? 0;
-        final price = int.tryParse(priceController.text) ?? 0;
-        controller.addProduct(name, quantity, price);
-        nameController.clear();
-        quantityController.clear();
-        priceController.clear();
-        Get.back();
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +26,9 @@ class StockScreen extends StatelessWidget {
         backgroundColor: theme.primaryColor,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _showAddProductDialog,
+        onPressed: (){
+          _showAddDialog(context, controller);
+        },
         child: Icon(Icons.add),
       ),
       body: Obx(() {
@@ -90,6 +65,98 @@ class StockScreen extends StatelessWidget {
           },
         );
       }),
+    );
+  }
+
+  void _showAddDialog(BuildContext context, StockController controller) {
+    final theme = Theme.of(context);
+
+    Get.dialog(
+      Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "নতুন পণ্য যোগ করুন",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: theme.primaryColor,
+                ),
+              ),
+              SizedBox(height: 20),
+              TextField(
+                controller: controller.nameController,
+                decoration: InputDecoration(
+                  labelText: "পণ্যের নাম",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 12),
+                ),
+              ),
+              SizedBox(height: 16),
+              TextField(
+                controller: controller.quantityController,
+                decoration: InputDecoration(
+                  labelText: "পরিমাণ",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 12),
+                ),
+                keyboardType: TextInputType.phone,
+              ),
+              SizedBox(height: 16),
+              TextField(
+                controller: controller.priceController,
+                decoration: InputDecoration(
+                  labelText: "দাম",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 12),
+                ),
+                keyboardType: TextInputType.number,
+              ),
+              SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () => Get.back(),
+                    child: Text(
+                      "বাতিল",
+                      style: TextStyle(color: Colors.grey[600]),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  ElevatedButton(
+                    onPressed: () {
+                      bool success = controller.addProduct();
+                      if (success) {
+                        Get.back(); // ✅ ইনপুট সঠিক হলে ডায়লগ বন্ধ হবে
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: theme.primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text("যোগ করুন", style: TextStyle(color: Colors.white)),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
