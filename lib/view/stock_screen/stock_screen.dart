@@ -140,7 +140,7 @@ class StockScreen extends StatelessWidget {
                     onPressed: () {
                       bool success = controller.addProduct();
                       if (success) {
-                        Get.back(); // ✅ ইনপুট সঠিক হলে ডায়লগ বন্ধ হবে
+                        Get.back();
                       }
                     },
                     style: ElevatedButton.styleFrom(

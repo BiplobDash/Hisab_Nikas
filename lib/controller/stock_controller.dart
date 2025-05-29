@@ -23,6 +23,9 @@ class StockController extends GetxController {
       quantity: quantity,
       price: price,
     ));
+    nameController.clear();
+    quantityController.clear();
+    priceController.clear();
     return true;
   }
 

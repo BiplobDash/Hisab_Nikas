@@ -173,7 +173,7 @@ class CustomerDueScreen extends StatelessWidget {
                     onPressed: () {
                       bool success = controller.addCustomerDue();
                       if (success) {
-                        Get.back(); // ✅ ইনপুট সঠিক হলে ডায়লগ বন্ধ হবে
+                        Get.back();
                       }
                     },
                     style: ElevatedButton.styleFrom(
