@@ -4,6 +4,8 @@ import 'package:hisab_nikas/view/customer_due_screen/customer_due_screen.dart';
 import 'package:hisab_nikas/view/ocr_screen/ocr_screen.dart';
 import 'package:hisab_nikas/view/stock_screen/stock_screen.dart';
 
+import '../view/sales_screen/sales_screen.dart';
+
 class DashboardCard extends StatelessWidget {
   final String title;
   final IconData icon;
@@ -26,6 +28,9 @@ class DashboardCard extends StatelessWidget {
           }
           if (title == 'স্টক') {
             Get.to(() => StockScreen());
+          }
+          if (title == 'বিক্রি') {
+            Get.to(() => SalesScreen());
           }
         }, // Screen navigation later
         child: Center(
